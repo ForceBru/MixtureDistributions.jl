@@ -136,7 +136,7 @@ function Distributions.mode(d::GeneralizedHyperbolic)
             EX - upper, EX - lower
         end
 
-        min_quadfit(x -> -logpdf(d, x), lo, hi)
+        (lo ≈ hi) ? lo : min_quadfit(x -> -logpdf(d, x), lo, hi)
     end
 end
 

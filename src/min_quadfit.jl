@@ -17,7 +17,7 @@ end
 Minimize `fn(x)` over `x ∈ [a, b]` using quadratic fit search.
 """
 function min_quadfit(fn, lo::Real, hi::Real)
-    @assert lo < hi
+    @assert lo < hi "$lo must be less than $hi"
 
     x1, x2, x3 = lo, (lo + hi)/2, hi # invariant: x1 < x2 < x3
     xopt = x2

@@ -2,7 +2,7 @@ module MixtureDistributions
 export VaR, CVaR
 
 using Random, LinearAlgebra, Distributions
-using Distributions: check_args, @check_args, @quantile_newton
+using Distributions: check_args, @check_args
 import StatsBase: AbstractWeights, AnalyticWeights, uweights
 using StaticArrays
 
@@ -10,6 +10,15 @@ import Polynomials: Polynomial
 import QuadGK: quadgk
 import Optim
 import SpecialFunctions: beta, loggamma, digamma, besselk
+
+macro quantile_newton(D)
+    esc(quote
+        Distributions.quantile(d::$D, p::Real) = Distributions.quantile_newton(d,p)
+        Distributions.cquantile(d::$D, p::Real) = Distributions.cquantile_newton(d,p)
+        Distributions.invlogcdf(d::$D, lp::Real) = Distributions.invlogcdf_newton(d,lp)
+        Distributions.invlogccdf(d::$D, lp::Real) = Distributions.invlogccdf_newton(d,lp)
+    end)
+end
 
 @doc raw"""
     lambertw_exp(l::Real)
